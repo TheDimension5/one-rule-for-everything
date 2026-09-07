@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Rule for Everything</title>
+<meta name="description" content="Einstein's unified field theory for kids, with hands-on simulations of every idea he tried.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;700;900&display=swap">
+<style>
+:root{
+  --board:#1B2923;--board-2:#1F2F28;--board-3:#2A3B33;
+  --chalk:#F1ECDF;--chalk-dim:rgba(241,236,223,.66);--chalk-faint:rgba(241,236,223,.32);--chalk-line:rgba(241,236,223,.15);
+  --yellow:#F6D46B;--blue:#8CC4EE;--pink:#F596A8;--green:#9DDBA3;
+  --tray:#5C3D27;--tray-2:#3B2718;
+  --display:'Caveat','Segoe Print','Bradley Hand',cursive;
+  --body:'Nunito','Avenir Next','Segoe UI',system-ui,sans-serif;
+  --maxw:1180px;
+}
+*{box-sizing:border-box}
+html{color-scheme:dark;scroll-behavior:smooth}
+body{margin:0;background:var(--board);color:var(--chalk);font-family:var(--body);font-size:1.0625rem;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background-color:var(--board);background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E"),radial-gradient(ellipse at 12% 0%,rgba(255,255,255,.05),transparent 50%),radial-gradient(ellipse at 92% 100%,rgba(255,255,255,.045),transparent 50%),radial-gradient(ellipse at 50% 50%,transparent 45%,rgba(0,0,0,.28));background-attachment:scroll,fixed,fixed,fixed;background-size:240px 240px,auto,auto,auto;background-repeat:repeat,no-repeat,no-repeat,no-repeat}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem);position:relative;z-index:1}
+.skip{position:absolute;left:-999px;top:0;background:var(--yellow);color:var(--board);padding:.5rem 1rem;z-index:10;font-weight:900}
+.skip:focus{left:1rem;top:1rem}
+
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.02;margin:0;text-wrap:balance;letter-spacing:.005em}
+h1{font-size:clamp(3.2rem,7.5vw,6rem)}
+h2{font-size:clamp(2.3rem,4.6vw,3.5rem)}
+h3{font-size:1.75rem}
+p{margin:0}
+a{color:var(--yellow)}
+.eyebrow{font-weight:900;font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;color:var(--yellow);margin-bottom:.5rem}
+.eyebrow.dim{color:var(--chalk-dim)}
+.lede{font-size:1.28rem;max-width:34ch;margin-top:1.1rem}
+.text{max-width:60ch}
+.text h2{margin-bottom:1rem}
+.text p+p{margin-top:.95em}
+.text em{font-style:normal;color:var(--yellow)}
+.text .when{font-family:var(--display);font-size:1.45rem;color:var(--chalk-dim);margin-top:-.4rem;margin-bottom:1rem}
+.chalkword{font-family:var(--display);font-size:1.25em;line-height:1;color:var(--yellow)}
+
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:center;padding:clamp(2.5rem,6vw,5rem) 0 clamp(2rem,5vw,4rem)}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.4rem;margin-top:1.8rem}
+.hint{font-family:var(--display);font-size:1.3rem;color:var(--chalk-dim)}
+.chapter{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:start;padding:clamp(3rem,7vw,6rem) 0;border-top:1px solid var(--chalk-line);scroll-margin-top:.5rem}
+.chapter.wide{grid-template-columns:1fr}
+.chapter.wide .text{max-width:70ch}
+@media (max-width:860px){.hero,.chapter{grid-template-columns:1fr}}
+
+.panel{position:relative;border:2px solid var(--chalk-faint);border-radius:10px;background:rgba(0,0,0,.16);box-shadow:inset 0 0 70px rgba(0,0,0,.28);overflow:hidden}
+.panel canvas{display:block;width:100%;aspect-ratio:4/3;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.panel canvas.short{aspect-ratio:16/10}
+.panel .doodle{position:absolute;right:1.1rem;bottom:.6rem;font-family:var(--display);font-size:1.6rem;color:var(--chalk-faint);transform:rotate(-5deg);pointer-events:none}
+.lab{margin:0;display:flex;flex-direction:column;gap:.85rem}
+.controls{display:flex;flex-wrap:wrap;gap:.6rem .9rem;align-items:center}
+.controls .sep{width:1px;height:1.6rem;background:var(--chalk-line)}
+.btn{font:900 .88rem/1 var(--body);letter-spacing:.04em;color:var(--chalk);background:transparent;border:2px solid var(--chalk-dim);border-radius:999px;padding:.66rem 1.05rem;cursor:pointer;transition:background .15s,color .15s,transform .15s,border-color .15s}
+.btn:hover{background:var(--chalk);color:var(--board);border-color:var(--chalk)}
+.btn:active{transform:scale(.97)}
+.btn.is-on{background:var(--yellow);color:var(--board);border-color:var(--yellow)}
+.btn.primary{background:var(--yellow);border-color:var(--yellow);color:var(--board);font-size:1rem;padding:.85rem 1.5rem}
+.btn.primary:hover{background:var(--chalk);border-color:var(--chalk)}
+.btn.blue{border-color:var(--blue);color:var(--blue)}.btn.blue:hover,.btn.blue.is-on{background:var(--blue);color:var(--board)}
+.btn.pink{border-color:var(--pink);color:var(--pink)}.btn.pink:hover,.btn.pink.is-on{background:var(--pink);color:var(--board)}
+.btn:focus-visible,input:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.slider{display:flex;align-items:center;gap:.6rem;font-weight:900;font-size:.85rem;letter-spacing:.03em}
+.slider input{accent-color:var(--yellow);width:150px;margin:0}
+.slider .val{font-family:var(--display);font-size:1.25rem;font-weight:700;min-width:3.2ch;color:var(--yellow);font-variant-numeric:tabular-nums}
+figcaption{font-size:.95rem;color:var(--chalk-dim)}
+figcaption b{color:var(--chalk);font-weight:900}
+
+.grownups{margin-top:1.5rem;border-left:3px solid var(--chalk-faint);padding:.2rem 0 .2rem 1rem;font-size:.95rem;color:var(--chalk-dim)}
+.grownups summary{cursor:pointer;font-weight:900;color:var(--chalk);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;list-style:none;display:flex;align-items:center;gap:.55rem}
+.grownups summary::-webkit-details-marker{display:none}
+.grownups summary::before{content:"+";font-family:var(--display);font-size:1.5rem;line-height:1;color:var(--yellow)}
+.grownups[open] summary::before{content:"–"}
+.grownups p{margin-top:.6rem;max-width:62ch}
+
+.trail{position:fixed;left:1rem;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;gap:.6rem;margin:0;padding:0;list-style:none}
+.trail a{display:block;width:11px;height:11px;border-radius:50%;border:2px solid var(--chalk-faint);position:relative;transition:background .2s,border-color .2s}
+.trail a.is-active{background:var(--yellow);border-color:var(--yellow)}
+.trail a span{position:absolute;left:22px;top:50%;transform:translateY(-50%);white-space:nowrap;font:700 .8rem var(--body);color:var(--chalk);opacity:0;pointer-events:none;transition:opacity .15s;background:var(--board-3);padding:.2rem .55rem;border-radius:4px}
+.trail a:hover span,.trail a:focus-visible span{opacity:1}
+@media (max-width:1320px){.trail{display:none}}
+
+.forces{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;position:relative;margin-top:1.5rem}
+.force{border:2px solid var(--chalk-faint);border-radius:12px;padding:1.1rem 1.1rem 1.2rem;background:var(--board-2);transition:transform .8s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;gap:.45rem;position:relative}
+.force h3{font-size:1.9rem}
+.force p{font-size:.92rem;color:var(--chalk-dim)}
+.force .tag{font-size:.7rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--green)}
+.force .tag.later{color:var(--pink)}
+.force svg{width:60px;height:60px;display:block}
+.forces.united .force[data-f="em"]{transform:translateX(calc(100% + 1rem)) rotate(-4deg)}
+.forces.united .force[data-f="strong"]{transform:translateX(calc(-100% - 1rem)) rotate(4deg)}
+.forces.united .force[data-f="weak"]{transform:scale(1.03)}
+.forces.united .force[data-f="gravity"]{animation:wobble 1.3s ease-in-out 1}
+.united-label{position:absolute;left:0;right:0;bottom:-2.6rem;text-align:center;font-family:var(--display);font-size:1.7rem;color:var(--yellow);opacity:0;transition:opacity .5s .5s;pointer-events:none}
+.forces.united .united-label{opacity:1}
+@keyframes wobble{0%,100%{transform:rotate(0)}20%{transform:rotate(-3deg)}40%{transform:rotate(3deg)}60%{transform:rotate(-2deg)}80%{transform:rotate(2deg)}}
+@media (max-width:760px){
+  .forces{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .forces.united .force[data-f="em"]{transform:translate(calc(-100% - 1rem),calc(100% + 1rem)) rotate(-4deg)}
+  .forces.united .force[data-f="strong"]{transform:translateX(calc(-100% - 1rem)) rotate(4deg)}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.force{transition:none}.forces.united .force[data-f="gravity"]{animation:none}}
+
+.two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.5rem;margin-top:2.5rem;align-items:start}
+.timeline{list-style:none;margin:.5rem 0 0;padding:0}
+.timeline li{display:grid;grid-template-columns:5.2rem 1fr;gap:1rem;align-items:baseline;padding:.5rem 0;border-bottom:1px dashed var(--chalk-line)}
+.timeline .year{font-family:var(--display);font-size:1.6rem;font-weight:700;color:var(--yellow);font-variant-numeric:tabular-nums}
+.timeline .what{font-size:.95rem}
+.timeline .what b{font-weight:900}
+
+.checks{list-style:none;padding:0;margin:1rem 0 0;display:grid;gap:.85rem}
+.checks li{display:grid;grid-template-columns:2rem 1fr;gap:.8rem;align-items:start}
+.checks .box{width:1.55rem;height:1.55rem;border:2px solid var(--chalk-dim);border-radius:5px;display:grid;place-items:center;font-family:var(--display);font-size:1.5rem;line-height:1;margin-top:.1rem}
+.checks .box.ok{color:var(--green)}.checks .box.q{color:var(--yellow)}
+.checks small{display:block;color:var(--chalk-dim);font-size:.9rem}
+
+.note{border:2px dashed var(--chalk-faint);border-radius:12px;padding:1.2rem 1.3rem;margin-top:1.8rem;font-size:.97rem}
+.note h3{font-size:1.6rem;margin-bottom:.4rem}
+.note ul{margin:.4rem 0 0;padding-left:1.2rem}
+.note li+li{margin-top:.35rem}
+
+.closing{text-align:center;padding:clamp(3rem,7vw,6rem) 0 3rem;border-top:1px solid var(--chalk-line)}
+.closing p{max-width:52ch;margin:1rem auto 0;font-size:1.15rem}
+.closing .big{font-family:var(--display);font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.1;color:var(--yellow);max-width:20ch;margin-top:1.5rem}
+.tray{height:20px;background:linear-gradient(var(--tray),var(--tray-2));border-top:2px solid rgba(255,255,255,.14);position:relative;z-index:1}
+.tray::before,.tray::after{content:"";position:absolute;top:-8px;height:8px;width:54px;border-radius:3px;background:var(--chalk);box-shadow:0 1px 2px rgba(0,0,0,.4)}
+.tray::before{left:12%}
+.tray::after{left:calc(12% + 70px);width:38px;background:var(--pink)}
+</style>
+</head>
+<body>
+<a class="skip" href="#ch1">Skip to the story</a>
+<ul class="trail" aria-label="Chapters">
+  <li><a href="#top" data-for="top"><span>Start</span></a></li>
+  <li><a href="#ch1" data-for="ch1"><span>1 · Two kinds of pull</span></a></li>
+  <li><a href="#ch2" data-for="ch2"><span>2 · Gravity is a dent</span></a></li>
+  <li><a href="#ch3" data-for="ch3"><span>3 · Invisible hair</span></a></li>
+  <li><a href="#ch4" data-for="ch4"><span>4 · Einstein's wish</span></a></li>
+  <li><a href="#ch5" data-for="ch5"><span>5 · A hidden direction</span></a></li>
+  <li><a href="#ch6" data-for="ch6"><span>6 · Twisted space</span></a></li>
+  <li><a href="#ch7" data-for="ch7"><span>7 · The lopsided ruler</span></a></li>
+  <li><a href="#ch8" data-for="ch8"><span>8 · What we know now</span></a></li>
+  <li><a href="#ch9" data-for="ch9"><span>9 · Still open</span></a></li>
+</ul>
+
+<div class="wrap" id="top">
+<header class="hero">
+  <div class="text">
+    <p class="eyebrow">Albert Einstein's unfinished puzzle</p>
+    <h1>One Rule for Everything</h1>
+    <p class="lede">Einstein spent the last thirty years of his life hunting for a single rule that explains why apples fall <em>and</em> why magnets stick. He never found it. This is the story of what he was looking for, and you get to play with every piece.</p>
+    <div class="hero-cta"><a class="btn primary" href="#ch1">Start the story</a><span class="hint">Try it now: drag the star. Drag the magnet.</span></div>
+  </div>
+  <div class="panel"><canvas id="cv-hero" aria-label="A star denting a grid next to a magnet with field lines. Drag either one."></canvas><span class="doodle">E = mc²</span></div>
+</header>
+
+<main>
+<section class="chapter" id="ch1">
+  <div class="text">
+    <p class="eyebrow">Chapter 1</p>
+    <h2>Two kinds of pull</h2>
+    <p>Some things pull without touching. Drop an apple and the whole Earth pulls it down. That pull is called <em>gravity</em>.</p>
+    <p>Hold a magnet near a paper clip and the clip jumps. That pull is <em>electromagnetism</em>. Electricity and magnetism turned out to be two faces of the same thing, so scientists gave them one long name.</p>
+    <p>By 1920, Einstein had a rulebook for both. Gravity had his own rulebook, which he finished in 1915. Electromagnetism had a rulebook written by James Clerk Maxwell. Two pulls, two rulebooks. Einstein thought that was one rulebook too many.</p>
+    <details class="grownups"><summary>For grown-ups</summary><p>In Einstein's day these were the only two known fundamental forces. Both reach across empty space, both weaken with the square of distance, and both are described by elegant field equations. To Einstein the resemblance was too strong to be a coincidence. He also hoped a unified theory would explain the strange behavior of atoms, which he never accepted as fundamentally random.</p></details>
+  </div>
+  <figure class="lab">
+    <div class="panel"><canvas id="cv-pulls" aria-label="An apple on a tree and a magnet near paper clips. Tap the apple to drop it. Drag the magnet toward the clips."></canvas></div>
+    <div class="controls"><button class="btn" id="pulls-reset">Put everything back</button></div>
+    <figcaption><b>Try this:</b> tap the apple to drop it. Drag the magnet down to the paper clips.</figcaption>
+  </figure>
+</section>
+
+<section class="chapter" id="ch2">
+  <div class="text">
+    <p class="eyebrow">Chapter 2</p>
+    <h2>Gravity is a dent</h2>
+    <p class="when">Einstein's big trick, 1915</p>
+    <p>Here is the idea that made Einstein famous. Gravity is not a rope pulling you. Space itself is like a stretchy sheet, and heavy things make a <em>dent</em> in it. A marble rolling past the dent curves toward the heavy thing. That curving <em>is</em> gravity.</p>
+    <p>The Sun makes a dent, and Earth rolls around the edge of it. One lap takes a year.</p>
+    <details class="grownups"><summary>For grown-ups</summary><p>General relativity: mass and energy curve spacetime, and free objects follow the straightest possible paths through the curved geometry. The rubber-sheet picture shows only the curvature of space. The real theory also curves time, and that part does most of the work of making things fall.</p></details>
+  </div>
+  <figure class="lab">
+    <div class="panel"><canvas id="cv-sheet" aria-label="A grid dented by a heavy sun. Tap anywhere to roll a marble around it."></canvas></div>
+    <div class="controls">
+      <label class="slider">How heavy <input type="range" id="sheet-mass" min="0.3" max="2.5" step="0.05" value="1"><span class="val" id="sheet-mass-val">1.0</span></label>
+      <span class="sep"></span>
+      <button class="btn" id="sheet-clear">Clear marbles</button>
+    </div>
+    <figcaption><b>Try this:</b> tap anywhere to roll a marble. Drag and let go to throw one. Drag the Sun around and watch the dent follow it.</figcaption>
+  </figure>
+</section>
+
+<section class="chapter" id="ch3">
+  <div class="text">
+    <p class="eyebrow">Chapter 3</p>
+    <h2>Magnets have invisible hair</h2>
+    <p>Now look at the other pull. Around a magnet or an electric charge there is an invisible pattern, like hair combed in a certain direction. Scientists call it a <em>field</em>. A compass needle points along the hair.</p>
+    <p>Notice something. The hair sits <em>on top of</em> space. It does not dent the sheet the way the Sun does. The sheet stays flat, and the field lives on it like paint on paper.</p>
+    <p>Einstein wondered: why would nature use two totally different tricks?</p>
+    <details class="grownups"><summary>For grown-ups</summary><p>Maxwell's equations describe the electromagnetic field as a tensor living on spacetime. In general relativity, gravity is not a field on spacetime at all: it is the geometry of spacetime itself. Einstein wanted electromagnetism to be geometry too. This simulation shows the electric field of point charges; a bar magnet's field has the same shape.</p></details>
+  </div>
+  <figure class="lab">
+    <div class="panel"><canvas id="cv-field" aria-label="Electric charges with field lines and a compass that follows your pointer. Drag the charges."></canvas></div>
+    <div class="controls">
+      <button class="btn blue" id="field-add-pos">Add a + charge</button>
+      <button class="btn pink" id="field-add-neg">Add a − charge</button>
+      <span class="sep"></span>
+      <button class="btn" id="field-clear">Start over</button>
+    </div>
+    <figcaption><b>Try this:</b> drag the charges around. Move your finger or mouse to steer the compass through the hair.</figcaption>
+  </figure>
+</section>
+
+<section class="chapter" id="ch4">
+  <div class="text">
+    <p class="eyebrow">Chapter 4</p>
+    <h2>Einstein's wish</h2>
+    <p>So here is the puzzle. Gravity is the <em>shape</em> of the sheet. Electricity is a <em>pattern drawn on</em> the sheet.</p>
+    <p>Einstein's wish: what if the pattern is secretly a shape too? Then there would be only one rule, the rule for shapes, and gravity and electricity would just be two kinds of dent.</p>
+    <p>Slide the wish all the way up and see how the picture would change.</p>
+    <details class="grownups"><summary>For grown-ups</summary><p>A unified field theory in Einstein's sense means one geometric object whose equations contain both his gravitational field equations and Maxwell's equations. Gravity uses the 10 components of a symmetric metric tensor. The electromagnetic field needs 6 more. Where do you hide six extra numbers inside geometry? Each of Einstein's attempts in the next three chapters is a different answer to that question.</p></details>
+  </div>
+  <figure class="lab">
+    <div class="panel"><canvas id="cv-wish" aria-label="A star denting a grid beside a charge with arrows. A slider turns the arrows into a dent."></canvas></div>
+    <div class="controls">
+      <label class="slider">Einstein's wish <input type="range" id="wish" min="0" max="1" step="0.01" value="0"><span class="val" id="wish-val">0%</span></label>
+    </div>
+    <figcaption><b>Try this:</b> slide slowly. Watch the arrows on the right sink into the sheet.</figcaption>
+  </figure>
+</section>
+<section class="chapter" id="ch5">
+  <div class="text">
+    <p class="eyebrow">Chapter 5 · Idea one</p>
+    <h2>A hidden tiny direction</h2>
+    <p class="when">Kaluza and Klein, 1919 to 1926</p>
+    <p>A mathematician named Theodor Kaluza wrote to Einstein in 1919 with a wild idea. What if space has an extra direction we can't see?</p>
+    <p>Think of a garden hose. From far away it looks like a line. An ant on it knows better: the ant can also walk <em>around</em> the hose. Kaluza found that if you add one tiny rolled-up direction to Einstein's gravity, the electricity rulebook falls out for free. Oskar Klein later said the loop is so small that no one could ever notice it.</p>
+    <p>Einstein loved it, then worried about it, then came back to it again and again for twenty years.</p>
+    <details class="grownups"><summary>For grown-ups</summary><p>Kaluza–Klein theory is general relativity in five dimensions, with the fifth dimension curled into a tiny circle. The 5D metric splits into the 4D metric (gravity), a vector (Maxwell's potential) and a scalar field. Momentum around the circle shows up as electric charge. The idea lives on inside string theory, which needs six or seven such hidden dimensions.</p></details>
+  </div>
+  <figure class="lab">
+    <div class="panel"><canvas id="cv-hose" aria-label="A line that becomes a tube as you zoom in, with an ant walking around it."></canvas></div>
+    <div class="controls">
+      <label class="slider">Zoom in <input type="range" id="zoom" min="0" max="1" step="0.01" value="0"><span class="val" id="zoom-val">0%</span></label>
+    </div>
+    <figcaption><b>Try this:</b> zoom in on the line. Watch what the ant can do that you can't see from far away.</figcaption>
+  </figure>
+</section>
+
+<section class="chapter" id="ch6">
+  <div class="text">
+    <p class="eyebrow">Chapter 6 · Idea two</p>
+    <h2>Twisted space</h2>
+    <p class="when">Einstein, 1928 to 1931</p>
+    <p>Einstein's own next idea: the sheet can do more than dent. It can also <em>twist</em>, like wringing out a wet towel. Maybe the dent is gravity and the twist is electricity.</p>
+    <p>He worked on this for three years. Newspapers around the world printed headlines about it before he was done. Then he found the math did not give the right answers for real magnets, and he let it go.</p>
+    <details class="grownups"><summary>For grown-ups</summary><p>This was teleparallelism, or "distant parallelism": a geometry with torsion but no curvature, built from tetrads with 16 components instead of the metric's 10. Einstein hoped the extra six would be electromagnetism. It failed to reproduce Maxwell's equations properly. Teleparallel gravity is still studied today as an equivalent way of writing general relativity.</p></details>
+  </div>
+  <figure class="lab">
+    <div class="panel"><canvas id="cv-twist" aria-label="A grid you can dent or twist with two sliders. Marbles show which way things would roll."></canvas></div>
+    <div class="controls">
+      <label class="slider">Dent <input type="range" id="bend" min="0" max="1" step="0.01" value="0.7"><span class="val" id="bend-val">70%</span></label>
+      <label class="slider">Twist <input type="range" id="twist" min="0" max="1" step="0.01" value="0"><span class="val" id="twist-val">0%</span></label>
+    </div>
+    <figcaption><b>Try this:</b> turn the dent down and the twist up. The marbles show which way things would roll.</figcaption>
+  </figure>
+</section>
+
+<section class="chapter" id="ch7">
+  <div class="text">
+    <p class="eyebrow">Chapter 7 · Idea three</p>
+    <h2>The lopsided ruler</h2>
+    <p class="when">Einstein, 1945 to 1955</p>
+    <p>His last idea, the one he worked on until the day he died. Imagine a ruler that gives a different answer going from A to B than going from B to A.</p>
+    <p>The part that is the same both ways is gravity. The <em>lopsided</em> part, Einstein hoped, is electricity. It was beautiful. But when he and his helpers worked it through, electric charges in this world did not push and pull each other the way real ones do.</p>
+    <details class="grownups"><summary>For grown-ups</summary><p>The non-symmetric field theory replaces the symmetric metric with a general 16-component tensor. Its symmetric part carries gravity, and Einstein identified the antisymmetric part with the electromagnetic field. Schrödinger pursued a related version. The theory produced no Lorentz force on charged particles and said nothing about quantum behavior, so it never matched experiment. The "direction-dependent distance" here is a picture, not the literal math: the line element only sees the symmetric part.</p></details>
+  </div>
+  <figure class="lab">
+    <div class="panel"><canvas id="cv-ruler" aria-label="Two points A and B with a ruler that counts differently in each direction. Drag the points."></canvas></div>
+    <div class="controls">
+      <label class="slider">Lopsidedness <input type="range" id="lop" min="0" max="1" step="0.01" value="0.5"><span class="val" id="lop-val">50%</span></label>
+    </div>
+    <figcaption><b>Try this:</b> drag A and B around. Turn the lopsidedness to zero and the two rulers agree again.</figcaption>
+  </figure>
+</section>
+
+<section class="chapter wide" id="ch8">
+  <div class="text">
+    <p class="eyebrow">Chapter 8</p>
+    <h2>What we know now</h2>
+    <p>Here is the twist Einstein did not see coming. While he hunted, other scientists found <em>two more pulls</em> hiding inside atoms. The strong force glues the middle of an atom together. The weak force lets one kind of atom change into another. Einstein was trying to unite two pulls when there were really four.</p>
+    <p>In the 1970s, scientists found that three of the four pulls, all except gravity, fit into one rulebook called the Standard Model. Gravity still will not join. It is the last one standing, exactly like in Einstein's day, only now from the other side.</p>
+  </div>
+  <div>
+    <div class="controls"><button class="btn" id="unite">Push them together</button></div>
+    <div class="forces" id="forces">
+      <div class="force" data-f="gravity">
+        <svg viewBox="0 0 60 60" fill="none" stroke="#F6D46B" stroke-width="2.2" stroke-linecap="round"><circle cx="30" cy="34" r="16"/><ellipse cx="30" cy="34" rx="26" ry="7" opacity=".6"/><circle cx="48" cy="12" r="4" fill="#F596A8" stroke="#F596A8"/><path d="M48 8v-4"/></svg>
+        <h3>Gravity</h3><p>Keeps you on the ground and the Moon in the sky.</p><span class="tag">Einstein knew this one</span>
+      </div>
+      <div class="force" data-f="em">
+        <svg viewBox="0 0 60 60" fill="none" stroke="#8CC4EE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14v18a16 16 0 0 0 32 0V14"/><path d="M14 14h9v10h-9zM37 14h9v10h-9z" fill="#F596A8" stroke="#F596A8"/><path d="M30 40l-4 9h6l-3 8" stroke="#F6D46B"/></svg>
+        <h3>Electromagnetism</h3><p>Lights, magnets, phones, and every color you see.</p><span class="tag">Einstein knew this one</span>
+      </div>
+      <div class="force" data-f="weak">
+        <svg viewBox="0 0 60 60" fill="none" stroke="#9DDBA3" stroke-width="2.2" stroke-linecap="round"><circle cx="20" cy="30" r="9"/><path d="M31 30h8" stroke-dasharray="2 3"/><circle cx="46" cy="22" r="5" fill="#9DDBA3"/><circle cx="46" cy="38" r="5"/></svg>
+        <h3>Weak force</h3><p>Lets atoms change into other atoms. It helps the Sun shine.</p><span class="tag later">Found in 1933</span>
+      </div>
+      <div class="force" data-f="strong">
+        <svg viewBox="0 0 60 60" fill="none" stroke="#F596A8" stroke-width="2.2" stroke-linecap="round"><circle cx="30" cy="20" r="6" fill="#F596A8"/><circle cx="19" cy="38" r="6" fill="#8CC4EE" stroke="#8CC4EE"/><circle cx="41" cy="38" r="6" fill="#F6D46B" stroke="#F6D46B"/><path d="M30 26l-11 12M30 26l11 12M25 38h10" stroke="#F1ECDF" opacity=".7"/></svg>
+        <h3>Strong force</h3><p>Glues the middle of every atom together.</p><span class="tag later">Found in 1935</span>
+      </div>
+      <div class="united-label">The Standard Model, 1970s. Gravity still outside.</div>
+    </div>
+    <div class="two-col">
+      <div>
+        <p class="eyebrow dim">Einstein's hunt, year by year</p>
+        <ul class="timeline">
+          <li><span class="year">1915</span><span class="what"><b>Gravity is a dent.</b> General relativity is finished.</span></li>
+          <li><span class="year">1919</span><span class="what"><b>Kaluza's letter.</b> A hidden fifth direction. Einstein sits on it for two years, then helps publish it.</span></li>
+          <li><span class="year">1926</span><span class="what"><b>Klein's loop.</b> The extra direction is a tiny circle, far too small to see.</span></li>
+          <li><span class="year">1928</span><span class="what"><b>Twisted space.</b> Einstein's own attempt makes front pages worldwide. He gives it up by 1931.</span></li>
+          <li><span class="year">1933</span><span class="what"><b>Surprise.</b> The weak force is discovered. Then the strong force in 1935. Now there are four pulls.</span></li>
+          <li><span class="year">1945</span><span class="what"><b>The lopsided ruler.</b> Einstein's final approach. He keeps revising it for ten years.</span></li>
+          <li><span class="year">1955</span><span class="what"><b>April 18.</b> Einstein dies in Princeton. Unfinished equations are still on his desk.</span></li>
+          <li><span class="year">1970s</span><span class="what"><b>Three of four unite.</b> The Standard Model joins electromagnetism, weak and strong. Gravity stays out.</span></li>
+        </ul>
+      </div>
+      <div class="text">
+        <details class="grownups" open><summary>For grown-ups</summary><p>Electroweak unification (Glashow, Weinberg and Salam, 1960s) plus quantum chromodynamics (1973) make up the Standard Model, a quantum field theory. The strong force sits inside the same framework but is not fully merged with the electroweak force; "grand unified theories" that do merge them remain unconfirmed. General relativity is a classical theory. Quantizing it the ordinary way produces infinities that cannot be tamed. The leading candidates for the missing piece are string theory, which contains Kaluza–Klein dimensions, and loop quantum gravity. Neither has a confirmed prediction yet.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="ch9">
+  <div class="text">
+    <p class="eyebrow">Chapter 9</p>
+    <h2>The puzzle is still open</h2>
+    <p>Did this page solve it? No. Nobody has. Here is what any winning rule has to do, and how Einstein's three ideas scored.</p>
+    <ul class="checks">
+      <li><span class="box ok">✓</span><span>Give the same answers as Einstein's gravity for planets, stars and black holes.<small>All three of his ideas managed this.</small></span></li>
+      <li><span class="box ok">✓</span><span>Give the same answers as the electricity rulebook for lights and magnets.<small>The hidden direction did. The other two came close but not close enough.</small></span></li>
+      <li><span class="box q">?</span><span>Work for the tiny world of atoms, where things are fuzzy and jumpy.<small>None of his ideas did. Every idea since has been stuck right here.</small></span></li>
+      <li><span class="box q">?</span><span>Predict something new that we can go and check.<small>Still waiting.</small></span></li>
+    </ul>
+    <div class="note">
+      <h3>Why this page can't solve it either</h3>
+      <p>The missing rule has to work for gravity and for the fuzzy world of atoms at the same time. When you write both into one equation today, the answers come out infinite. Fixing that needs a brand-new idea, and probably an experiment we do not know how to build yet. That is an honest "not yet," not a "never."</p>
+    </div>
+  </div>
+  <figure class="lab">
+    <p class="eyebrow">Your turn: both pulls in one picture</p>
+    <div class="panel"><canvas id="cv-sand" aria-label="A sandbox with a heavy sun and electric charges. Launch plain or charged marbles and watch both pulls act at once."></canvas></div>
+    <div class="controls">
+      <button class="btn is-on" data-tool="0">Plain marble</button>
+      <button class="btn blue" data-tool="1">+ marble</button>
+      <button class="btn pink" data-tool="-1">− marble</button>
+      <span class="sep"></span>
+      <button class="btn blue" id="sand-add-pos">Add +</button>
+      <button class="btn pink" id="sand-add-neg">Add −</button>
+      <button class="btn" id="sand-clear">Clear</button>
+    </div>
+    <div class="controls">
+      <label class="slider">Sun weight <input type="range" id="sand-mass" min="0" max="2.5" step="0.05" value="1"><span class="val" id="sand-mass-val">1.0</span></label>
+    </div>
+    <figcaption><b>Try this:</b> pick a marble, then tap to launch it. Plain marbles feel only the dent. Charged marbles feel the dent <b>and</b> the hair. This is the closest picture we can draw, but underneath there are still two rules. Finding the one rule underneath is the job that is still open.</figcaption>
+  </figure>
+</section>
+</main>
+
+<footer class="closing">
+  <p class="eyebrow">The end, for now</p>
+  <p>Einstein died in 1955 with unfinished equations on his desk. He knew he might not finish. He kept going anyway, because he believed the universe was too beautiful to need two rulebooks.</p>
+  <p class="big" style="margin-left:auto;margin-right:auto">Maybe the person who finds the one rule is reading this right now.</p>
+</footer>
+</div>
+<div class="tray" aria-hidden="true"></div>
+<script>
+(function(){
+'use strict';
+const C={chalk:'#F1ECDF',yellow:'#F6D46B',blue:'#8CC4EE',pink:'#F596A8',green:'#9DDBA3',board:'#1B2923'};
+const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const rgba=(hex,a)=>{const n=parseInt(hex.slice(1),16);return `rgba(${n>>16},${(n>>8)&255},${n&255},${a})`};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+const $=id=>document.getElementById(id);
+
+/* ---------- chalk drawing helpers ---------- */
+function text(ctx,str,x,y,o={}){const{size=20,color=C.chalk,align='center',fam='display',alpha=1,base='middle'}=o;ctx.save();ctx.globalAlpha=alpha;ctx.font=fam==='display'?`700 ${size}px Caveat, "Segoe Print", cursive`:`900 ${size}px Nunito, system-ui, sans-serif`;ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline=base;ctx.fillText(str,x,y);ctx.restore()}
+function circle(ctx,x,y,r,fill,stroke,lw=2){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke()}}
+function glow(ctx,x,y,r,color,a=.55){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,rgba(color,a));g.addColorStop(1,rgba(color,0));ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill()}
+function shade(ctx,x,y,r,a=.38){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(0,0,0,${a})`);g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill()}
+function poly(ctx,pts,color,lw=1.2,alpha=1){if(pts.length<2)return;ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.lineWidth=lw;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.stroke();ctx.restore()}
+function rr(ctx,x,y,w,h,r){ctx.beginPath();if(ctx.roundRect){ctx.roundRect(x,y,w,h,r)}else{ctx.rect(x,y,w,h)}}
+function marble(ctx,x,y,r,color){glow(ctx,x,y,r*2.6,color,.4);circle(ctx,x,y,r,color);circle(ctx,x-r*.3,y-r*.3,r*.3,'rgba(255,255,255,.55)')}
+function sun(ctx,x,y,r){glow(ctx,x,y,r*2.4,C.yellow,.5);circle(ctx,x,y,r,C.yellow);circle(ctx,x-r*.28,y-r*.28,r*.28,'rgba(255,255,255,.5)')}
+function drawCharge(ctx,c,r=15){const col=c.q>0?C.blue:C.pink;glow(ctx,c.x,c.y,r*2.3,col,.45);circle(ctx,c.x,c.y,r,col);text(ctx,c.q>0?'+':'−',c.x,c.y+1,{size:r*1.7,color:C.board})}
+function drawMagnet(ctx,m,w=96,h=30){ctx.save();ctx.translate(m.x,m.y);rr(ctx,-w/2,-h/2,w/2,h,[8,0,0,8]);ctx.fillStyle=C.pink;ctx.fill();rr(ctx,0,-h/2,w/2,h,[0,8,8,0]);ctx.fillStyle=C.blue;ctx.fill();ctx.strokeStyle='rgba(0,0,0,.25)';ctx.lineWidth=1.5;rr(ctx,-w/2,-h/2,w,h,8);ctx.stroke();text(ctx,'N',-w/4,1,{size:24,color:C.board});text(ctx,'S',w/4,1,{size:24,color:C.board});ctx.restore()}
+function poles(m,w=96){return[{x:m.x-w/2+8,y:m.y,q:1},{x:m.x+w/2-8,y:m.y,q:-1}]}
+
+/* ---------- physics helpers ---------- */
+function dentField(masses){return(x,y)=>{let dx=0,dy=0;for(const M of masses){if(!M.m)continue;const ex=M.x-x,ey=M.y-y;const r2=ex*ex+ey*ey,r=Math.sqrt(r2)+1e-6;const s=M.s||60;const f=M.m*r/(r2+s*s);dx+=ex/r*f;dy+=ey/r*f}return[dx,dy]}}
+function drawGrid(ctx,w,h,field,o={}){const{spacing=30,color=C.chalk,alpha=.2,lw=1}=o;ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.lineWidth=lw;ctx.lineJoin='round';const st=spacing/2;
+  for(let x=0;x<=w+1;x+=spacing){ctx.beginPath();for(let y=0;y<=h+1;y+=st){const d=field(x,y);y===0?ctx.moveTo(x+d[0],y+d[1]):ctx.lineTo(x+d[0],y+d[1])}ctx.stroke()}
+  for(let y=0;y<=h+1;y+=spacing){ctx.beginPath();for(let x=0;x<=w+1;x+=st){const d=field(x,y);x===0?ctx.moveTo(x+d[0],y+d[1]):ctx.lineTo(x+d[0],y+d[1])}ctx.stroke()}ctx.restore()}
+function fieldAt(ch,x,y){let ex=0,ey=0;for(const c of ch){const dx=x-c.x,dy=y-c.y;const r2=dx*dx+dy*dy+25;const f=c.q/(r2*Math.sqrt(r2));ex+=dx*f;ey+=dy*f}return[ex,ey]}
+function fieldLines(ch,w,h,o={}){const{per=14,step=3,max=700}=o;const pos=ch.filter(c=>c.q>0),neg=ch.filter(c=>c.q<0);const seeds=pos.length?pos:neg;const dir=pos.length?1:-1;const lines=[];
+  for(const c of seeds){for(let i=0;i<per;i++){const a=(i+.5)/per*Math.PI*2;let x=c.x+Math.cos(a)*12,y=c.y+Math.sin(a)*12;const pts=[[x,y]];
+    for(let k=0;k<max;k++){let e=fieldAt(ch,x,y);let m=Math.hypot(e[0],e[1]);if(m<1e-9)break;const mx=x+dir*e[0]/m*step/2,my=y+dir*e[1]/m*step/2;e=fieldAt(ch,mx,my);m=Math.hypot(e[0],e[1]);if(m<1e-9)break;x+=dir*e[0]/m*step;y+=dir*e[1]/m*step;pts.push([x,y]);
+      if(x<-30||y<-30||x>w+30||y>h+30)break;let hit=false;for(const o2 of ch){if(o2!==c&&Math.hypot(x-o2.x,y-o2.y)<12){hit=true;break}}if(hit)break}
+    lines.push(pts)}}return{lines,dir}}
+function drawLines(ctx,fl,o={}){const{color=C.chalk,alpha=.45,arrows=true}=o;for(const pts of fl.lines){poly(ctx,pts,color,1.3,alpha);
+  if(arrows){for(let i=28;i<pts.length-2;i+=48){const a=pts[i],b=pts[i+1];const ang=Math.atan2((b[1]-a[1])*fl.dir,(b[0]-a[0])*fl.dir);ctx.save();ctx.globalAlpha=alpha;ctx.translate(a[0],a[1]);ctx.rotate(ang);ctx.strokeStyle=color;ctx.lineWidth=1.4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-6,-4.5);ctx.lineTo(0,0);ctx.lineTo(-6,4.5);ctx.stroke();ctx.restore()}}}}
+function orbitV(p,c,GM,soft){const dx=c.x-p.x,dy=c.y-p.y;const r2=dx*dx+dy*dy;const r=Math.sqrt(r2)+1e-6;const v=Math.sqrt(GM*r2/Math.pow(r2+soft*soft,1.5));return{vx:-dy/r*v,vy:dx/r*v}}
+
+/* ---------- sim framework ---------- */
+const sims=[];
+function makeSim(id,def){const cv=$(id);if(!cv)return null;const ctx=cv.getContext('2d');const s=Object.assign({cv,ctx,w:0,h:0,visible:false,t:0,dt:0,pointer:null},def);
+  function resize(){const r=cv.getBoundingClientRect();if(r.width<2)return;const dpr=Math.min(window.devicePixelRatio||1,2);const first=s.w===0;s.w=r.width;s.h=r.height;cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);if(first){s.init&&s.init(s)}else{s.onResize&&s.onResize(s)}s.draw(s)}
+  new ResizeObserver(resize).observe(cv);resize();
+  new IntersectionObserver(e=>{s.visible=e[0].isIntersecting},{rootMargin:'120px'}).observe(cv);
+  const pos=e=>{const r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}};
+  cv.addEventListener('pointerdown',e=>{e.preventDefault();cv.setPointerCapture(e.pointerId);s.pointer=pos(e);s.down&&s.down(s.pointer,s,e)});
+  cv.addEventListener('pointermove',e=>{s.pointer=pos(e);s.move&&s.move(s.pointer,s,e)});
+  const up=e=>{s.up&&s.up(pos(e),s,e)};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+  cv.addEventListener('pointerleave',()=>{s.leave&&s.leave(s)});
+  sims.push(s);return s}
+let last=performance.now();
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;for(const s of sims){if(!s.visible||!s.w)continue;s.dt=dt;s.t+=dt;s.step&&s.step(dt,s);s.draw(s)}requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+const hook=(id,fn)=>{const el=$(id);if(el)el.addEventListener('click',fn)};
+const slide=(id,fn,fmt)=>{const el=$(id),out=$(id+'-val');if(!el)return;const go=()=>{const v=parseFloat(el.value);if(out)out.textContent=fmt?fmt(v):v;fn(v)};el.addEventListener('input',go);go()};
+const pct=v=>Math.round(v*100)+'%';
+
+/* ---------- HERO: star + magnet ---------- */
+makeSim('cv-hero',{
+  init(s){s.star={x:s.w*.3,y:s.h*.52,m:2600,s:55};s.mag={x:s.w*.74,y:s.h*.5};s.drag=null;s.dirty=true;s.orb=[{a:0,r:100,sp:.9,c:C.blue},{a:2.6,r:150,sp:.5,c:C.pink}]},
+  onResize(s){s.star.x=clamp(s.star.x,40,s.w-40);s.star.y=clamp(s.star.y,40,s.h-40);s.mag.x=clamp(s.mag.x,60,s.w-60);s.mag.y=clamp(s.mag.y,30,s.h-30);s.dirty=true},
+  down(p,s){if(dist(p,s.star)<42)s.drag='star';else if(Math.abs(p.x-s.mag.x)<56&&Math.abs(p.y-s.mag.y)<24)s.drag='mag'},
+  move(p,s){if(s.drag==='star'){s.star.x=clamp(p.x,40,s.w-40);s.star.y=clamp(p.y,40,s.h-40)}else if(s.drag==='mag'){s.mag.x=clamp(p.x,60,s.w-60);s.mag.y=clamp(p.y,30,s.h-30);s.dirty=true}},
+  up(p,s){s.drag=null},
+  draw(s){const{ctx,w,h,star,mag}=s;ctx.clearRect(0,0,w,h);
+    drawGrid(ctx,w,h,dentField([star]),{spacing:30});shade(ctx,star.x,star.y,120);
+    if(s.dirty){s.fl=fieldLines(poles(mag),w,h,{per:12,max:520});s.dirty=false}
+    drawLines(ctx,s.fl,{alpha:.4,arrows:false});
+    for(const o of s.orb){if(!REDUCE||s.drag)o.a+=o.sp*s.dt;const x=star.x+Math.cos(o.a)*o.r,y=star.y+Math.sin(o.a)*o.r*.5;marble(ctx,x,y,6,o.c)}
+    sun(ctx,star.x,star.y,26);drawMagnet(ctx,mag);
+    const d=dist(star,mag);const k=clamp((300-d)/200,0,1);const mx=(star.x+mag.x)/2,my=(star.y+mag.y)/2-10;
+    text(ctx,'?',mx,my,{size:54+k*50,color:C.yellow,alpha:.55+k*.45});
+    if(k>.35)text(ctx,'same rule?',mx,my+52+k*22,{size:24,alpha:k});
+    text(ctx,'gravity',star.x,star.y+62,{size:22,alpha:.75});text(ctx,'magnetism',mag.x,mag.y+42,{size:22,alpha:.75})}
+});
+
+/* ---------- CH1: apple + paper clips ---------- */
+const pulls=makeSim('cv-pulls',{
+  init(s){s.reset(s)},
+  reset(s){const w=s.w,h=s.h;s.tree={x:w*.22,y:h*.36,r:Math.min(w*.14,h*.2)};s.apple={x:w*.27,y:h*.5,vy:0,state:'hang',timer:0};s.ground=h*.87;s.mag={x:w*.78,y:h*.22};s.clips=[];
+    for(let i=0;i<6;i++)s.clips.push({x:w*.58+i*(w*.36/5),y:s.ground-6-(i%2)*10,vx:0,vy:0,stuck:null,rot:(i*.9)%1.2-.6});s.drag=false},
+  onResize(s){s.reset(s)},
+  down(p,s){if(dist(p,s.apple)<28&&s.apple.state==='hang'){s.apple.state='fall';s.apple.vy=0}else if(Math.abs(p.x-s.mag.x)<56&&Math.abs(p.y-s.mag.y)<26)s.drag=true},
+  move(p,s){if(s.drag){s.mag.x=clamp(p.x,s.w*.52+50,s.w-50);s.mag.y=clamp(p.y,26,s.h-26)}},
+  up(p,s){s.drag=false},
+  step(dt,s){const a=s.apple;if(a.state==='fall'){a.vy+=900*dt;a.y+=a.vy*dt;if(a.y>s.ground-12){a.y=s.ground-12;a.vy=-a.vy*.35;if(Math.abs(a.vy)<40){a.vy=0;a.state='rest';a.timer=0}}}else if(a.state==='rest'){a.timer+=dt;if(a.timer>2.2){a.state='hang';a.y=s.h*.5}}
+    const P=poles(s.mag);for(const c of s.clips){if(c.stuck){c.x=s.mag.x+c.stuck.dx;c.y=s.mag.y+c.stuck.dy;continue}let near=P[0],dn=dist(c,P[0]);const d2=dist(c,P[1]);if(d2<dn){near=P[1];dn=d2}
+      if(dn<150){const f=30000/(dn*dn+300);c.vx+=(near.x-c.x)/dn*f*dt*60;c.vy+=(near.y-c.y)/dn*f*dt*60}
+      c.vx*=.9;c.vy*=.9;c.x+=c.vx*dt;c.y+=c.vy*dt;if(!s.drag&&dn>150){c.vy+=600*dt}if(c.y>s.ground-6){c.y=s.ground-6;c.vy=0;c.vx*=.5}
+      if(dn<16){c.stuck={dx:c.x-s.mag.x,dy:c.y-s.mag.y}}}},
+  draw(s){const{ctx,w,h,tree,apple}=s;ctx.clearRect(0,0,w,h);
+    ctx.save();ctx.setLineDash([6,8]);poly(ctx,[[w/2,h*.06],[w/2,h*.94]],C.chalk,1.5,.25);ctx.restore();
+    poly(ctx,[[w*.04,s.ground],[w*.96,s.ground]],C.chalk,2,.5);
+    poly(ctx,[[tree.x,s.ground],[tree.x-4,tree.y+tree.r*.6],[tree.x+4,tree.y+tree.r*.3]],C.chalk,10,.5);
+    circle(ctx,tree.x,tree.y,tree.r,rgba(C.green,.12),C.green,2.5);circle(ctx,tree.x-tree.r*.55,tree.y+tree.r*.25,tree.r*.6,rgba(C.green,.12),C.green,2.5);circle(ctx,tree.x+tree.r*.55,tree.y+tree.r*.2,tree.r*.6,rgba(C.green,.12),C.green,2.5);
+    glow(ctx,apple.x,apple.y,26,C.pink,.35);circle(ctx,apple.x,apple.y,12,C.pink);poly(ctx,[[apple.x,apple.y-12],[apple.x+3,apple.y-19]],C.chalk,2.5);
+    if(apple.state==='hang')text(ctx,'tap the apple',w*.25,h*.95,{size:22,alpha:.75});else if(apple.state==='rest')text(ctx,'gravity!',w*.25,h*.95,{size:24,color:C.yellow});
+    for(const c of s.clips){ctx.save();ctx.translate(c.x,c.y);ctx.rotate(c.rot);ctx.strokeStyle=C.chalk;ctx.lineWidth=2;rr(ctx,-9,-4,18,8,4);ctx.stroke();rr(ctx,-5,-2,10,4,2);ctx.stroke();ctx.restore()}
+    drawMagnet(ctx,s.mag);const stuck=s.clips.filter(c=>c.stuck).length;
+    text(ctx,stuck?(stuck===s.clips.length?'magnetism!':'they jump!'):'drag the magnet',w*.75,h*.95,{size:stuck?24:22,color:stuck?C.yellow:C.chalk,alpha:stuck?1:.75})}
+});
+hook('pulls-reset',()=>pulls&&pulls.reset(pulls));
+
+/* ---------- CH2: rubber sheet ---------- */
+const GM0=22000;
+const sheet=makeSim('cv-sheet',{
+  init(s){s.sun={x:s.w/2,y:s.h/2,m:1};s.marbles=[];s.poofs=[];s.press=null;s.drag=false;s.count=0},
+  onResize(s){s.sun.x=clamp(s.sun.x,30,s.w-30);s.sun.y=clamp(s.sun.y,30,s.h-30)},
+  sunR(s){return 16+9*s.sun.m},
+  down(p,s){if(dist(p,s.sun)<s.sunR(s)+10)s.drag=true;else s.press={x:p.x,y:p.y}},
+  move(p,s){if(s.drag){s.sun.x=clamp(p.x,30,s.w-30);s.sun.y=clamp(p.y,30,s.h-30)}},
+  up(p,s){if(s.drag){s.drag=false;return}if(!s.press)return;const d={x:p.x-s.press.x,y:p.y-s.press.y};let v;if(Math.hypot(d.x,d.y)<8)v=orbitV(s.press,s.sun,GM0*s.sun.m,30);else v={vx:d.x*2.2,vy:d.y*2.2};
+    s.launch(s,s.press.x,s.press.y,v.vx,v.vy,0);s.press=null},
+  launch(s,x,y,vx,vy,q){const cols=[C.chalk,C.green,C.blue,C.pink];s.marbles.push({x,y,vx,vy,q,trail:[],c:q>0?C.blue:q<0?C.pink:cols[s.count%cols.length]});s.count++;if(s.marbles.length>40)s.marbles.shift()},
+  step(dt,s){const sub=4,h=dt/sub,GM=GM0*s.sun.m,R=s.sunR(s);
+    for(const m of s.marbles){for(let k=0;k<sub;k++){const dx=s.sun.x-m.x,dy=s.sun.y-m.y;const r2=dx*dx+dy*dy;const a=GM/Math.pow(r2+900,1.5);m.vx+=dx*a*h;m.vy+=dy*a*h;
+        if(s.extra)s.extra(s,m,h);m.x+=m.vx*h;m.y+=m.vy*h}
+      m.trail.push([m.x,m.y]);if(m.trail.length>60)m.trail.shift();
+      if(dist(m,s.sun)<R+3){m.dead=true;s.poofs.push({x:m.x,y:m.y,t:0,c:m.c})}
+      if(m.x<-80||m.y<-80||m.x>s.w+80||m.y>s.h+80)m.dead=true}
+    s.marbles=s.marbles.filter(m=>!m.dead);for(const p of s.poofs)p.t+=dt;s.poofs=s.poofs.filter(p=>p.t<.6)},
+  draw(s){const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);const m=s.sun.m;
+    drawGrid(ctx,w,h,dentField([{x:s.sun.x,y:s.sun.y,m:2200*m,s:50+10*m}]),{spacing:30});shade(ctx,s.sun.x,s.sun.y,90+40*m,m>0?.28+.12*Math.min(m,1.5):0);
+    if(s.pre)s.pre(s);
+    for(const mb of s.marbles){poly(ctx,mb.trail,mb.c,1.5,.35);marble(ctx,mb.x,mb.y,5,mb.c)}
+    for(const p of s.poofs){const k=p.t/.6;circle(ctx,p.x,p.y,6+k*22,null,rgba(p.c,1-k),2)}
+    sun(ctx,s.sun.x,s.sun.y,s.sunR(s));
+    if(s.press){ctx.save();ctx.setLineDash([4,6]);poly(ctx,[[s.press.x,s.press.y],[s.pointer.x,s.pointer.y]],C.chalk,1.5,.6);ctx.restore()}
+    if(s.count===0&&!s.press)text(ctx,'tap anywhere to roll a marble',w/2,h*.9,{size:24,alpha:.7});
+    if(s.post)s.post(s)}
+});
+slide('sheet-mass',v=>{if(sheet)sheet.sun.m=v},v=>v.toFixed(1));
+hook('sheet-clear',()=>{if(sheet){sheet.marbles=[]}});
+
+/* ---------- CH3: field lines + compass ---------- */
+const field=makeSim('cv-field',{
+  init(s){s.reset(s)},
+  reset(s){s.charges=[{x:s.w*.35,y:s.h*.52,q:1},{x:s.w*.65,y:s.h*.52,q:-1}];s.drag=null;s.dirty=true;s.comp={x:s.w/2,y:s.h*.22}},
+  onResize(s){s.reset(s)},
+  add(s,q){let p,tries=0;do{p={x:s.w*.15+Math.random()*s.w*.7,y:s.h*.15+Math.random()*s.h*.7,q};tries++}while(tries<30&&s.charges.some(c=>dist(c,p)<60));s.charges.push(p);if(s.charges.length>8)s.charges.shift();s.dirty=true},
+  down(p,s){s.drag=s.charges.find(c=>dist(c,p)<22)||null},
+  move(p,s){if(s.drag){s.drag.x=clamp(p.x,16,s.w-16);s.drag.y=clamp(p.y,16,s.h-16);s.dirty=true}else{s.comp=p}},
+  up(p,s){s.drag=null},
+  draw(s){const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);drawGrid(ctx,w,h,()=>[0,0],{spacing:30,alpha:.1});
+    if(s.dirty){s.fl=fieldLines(s.charges,w,h,{per:14});s.dirty=false}
+    drawLines(ctx,s.fl,{alpha:.5});for(const c of s.charges)drawCharge(ctx,c);
+    const e=fieldAt(s.charges,s.comp.x,s.comp.y);const m=Math.hypot(e[0],e[1]);const cx=s.comp.x,cy=s.comp.y;
+    circle(ctx,cx,cy,22,rgba(C.board,.85),C.chalk,2);if(m>1e-7){const ux=e[0]/m,uy=e[1]/m;poly(ctx,[[cx,cy],[cx+ux*16,cy+uy*16]],C.pink,4);poly(ctx,[[cx,cy],[cx-ux*16,cy-uy*16]],C.chalk,4)}circle(ctx,cx,cy,3,C.chalk);
+    text(ctx,'compass',cx,cy+38,{size:18,alpha:.7});
+    if(!s.charges.length)text(ctx,'add a charge to grow some hair',w/2,h/2,{size:26,alpha:.7})}
+});
+hook('field-add-pos',()=>field&&field.add(field,1));hook('field-add-neg',()=>field&&field.add(field,-1));hook('field-clear',()=>field&&field.reset(field));
+
+/* ---------- CH4: Einstein's wish ---------- */
+const wish=makeSim('cv-wish',{
+  init(s){s.k=0},
+  draw(s){const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);const k=s.k;const star={x:w*.28,y:h*.5,m:2400,s:55};const ch={x:w*.72,y:h*.5,q:1};
+    drawGrid(ctx,w,h,dentField([star,{x:ch.x,y:ch.y,m:1900*k,s:50}]),{spacing:30});shade(ctx,star.x,star.y,110);if(k>0)shade(ctx,ch.x,ch.y,100*k,.36*k);
+    if(k<1){ctx.save();ctx.globalAlpha=(1-k)*.75;for(let i=0;i<12;i++){const a=i/12*Math.PI*2;for(let r=34;r<=106;r+=36){const x1=ch.x+Math.cos(a)*r,y1=ch.y+Math.sin(a)*r,x2=ch.x+Math.cos(a)*(r+20),y2=ch.y+Math.sin(a)*(r+20);poly(ctx,[[x1,y1],[x2,y2]],C.blue,1.6);ctx.save();ctx.translate(x2,y2);ctx.rotate(a);ctx.strokeStyle=C.blue;ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(-6,-4);ctx.lineTo(0,0);ctx.lineTo(-6,4);ctx.stroke();ctx.restore()}}ctx.restore()}
+    sun(ctx,star.x,star.y,24);drawCharge(ctx,ch,16);
+    text(ctx,'gravity: the sheet bends',star.x,h*.84,{size:22,alpha:.8});
+    text(ctx,k<.5?'electricity: arrows on the sheet':'electricity: the sheet bends too?',ch.x,h*.84,{size:22,alpha:.8,color:k<.5?C.chalk:C.yellow});
+    text(ctx,k<.5?'two rulebooks':k<.95?'getting closer...':'one rulebook!',w/2,h*.1,{size:34,color:k<.5?C.chalk:C.yellow})}
+});
+slide('wish',v=>{if(wish)wish.k=v},pct);
+
+/* ---------- CH5: the garden hose ---------- */
+const hose=makeSim('cv-hose',{
+  init(s){s.z=0;s.th=0;s.ants=[{th:0,ph:0},{th:2.1,ph:1.7}]},
+  draw(s){const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);const z=s.z,R=1.5+80*z*z,cy=h*.5,x0=w*.08,x1=w*.92,ob=.34;
+    drawGrid(ctx,w,h,()=>[0,0],{spacing:36,alpha:.09});
+    if(z>.35){const rl=6*(z-.35)/.65;ctx.save();ctx.globalAlpha=.35*(z-.35)/.65;ctx.strokeStyle=C.yellow;ctx.lineWidth=1.2;for(let x=0;x<=w;x+=36)for(let y=0;y<=h;y+=36){if(Math.abs(y-cy)<R+30)continue;ctx.beginPath();ctx.ellipse(x,y,rl*ob,rl,0,0,Math.PI*2);ctx.stroke()}ctx.restore()}
+    ctx.save();ctx.strokeStyle=C.chalk;ctx.lineWidth=2;ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(x0,cy-R);ctx.lineTo(x1,cy-R);ctx.moveTo(x0,cy+R);ctx.lineTo(x1,cy+R);ctx.stroke();
+    if(R>3){ctx.globalAlpha=.3;for(let x=x0+70;x<x1;x+=70){ctx.beginPath();ctx.ellipse(x,cy,R*ob,R,0,-Math.PI/2,Math.PI/2);ctx.stroke()}ctx.globalAlpha=.15;for(let x=x0+70;x<x1;x+=70){ctx.beginPath();ctx.ellipse(x,cy,R*ob,R,0,Math.PI/2,Math.PI*1.5);ctx.stroke()}
+      ctx.globalAlpha=1;ctx.beginPath();ctx.ellipse(x0,cy,R*ob,R,0,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.ellipse(x1,cy,R*ob,R,0,-Math.PI/2,Math.PI/2);ctx.stroke()}
+    ctx.restore();
+    const spin=REDUCE?0:s.dt;for(const a of s.ants){a.th+=2.2*spin;a.ph+=.35*spin;const sx=w*.5+Math.sin(a.ph)*w*.28;const y=cy-R*Math.cos(a.th),zz=R*Math.sin(a.th);const x=sx+zz*ob;const front=zz>=0||R<3;const al=front?1:.28;
+      ctx.save();ctx.globalAlpha=al;ctx.strokeStyle=C.pink;ctx.lineWidth=1.5;for(let i=-1;i<=1;i++){ctx.beginPath();ctx.moveTo(x-6,y+i*3);ctx.lineTo(x+6,y-i*3);ctx.stroke()}ctx.restore();
+      circle(ctx,x,y,5,rgba(C.pink,al));circle(ctx,x+6,y,3.5,rgba(C.pink,al))}
+    const msg=z<.25?'from far away, it is just a line':z<.6?'zoom in... it is getting thicker':'up close: a tube! the ant can walk around it';
+    text(ctx,msg,w/2,h*.14,{size:28,color:z<.6?C.chalk:C.yellow});
+    if(z>.6)text(ctx,'walking around the loop = having electric charge',w/2,h*.88,{size:22,alpha:(z-.6)/.4*.85});
+    if(z>.35)text(ctx,'a tiny loop hiding at every point',w/2,h*.78,{size:20,color:C.yellow,alpha:(z-.35)/.65*.7})}
+});
+slide('zoom',v=>{if(hose)hose.z=v},pct);
+
+/* ---------- CH6: dent vs twist ---------- */
+const twist=makeSim('cv-twist',{
+  init(s){s.b=.7;s.tw=0;s.m=[];for(let i=0;i<9;i++)s.m.push(s.spawn(s,true))},
+  spawn(s,any){const a=Math.random()*Math.PI*2;const r=any?Math.random()*Math.min(s.w,s.h)*.45+40:Math.min(s.w,s.h)*.48;return{x:s.w/2+Math.cos(a)*r,y:s.h/2+Math.sin(a)*r,trail:[]}},
+  field(s){const cx=s.w/2,cy=s.h/2,b=s.b,tw=s.tw;return(x,y)=>{const dx=x-cx,dy=y-cy;const r2=dx*dx+dy*dy,r=Math.sqrt(r2)+1e-6;const phi=tw*1.6*(6000/(r2+6000));const c=Math.cos(phi),sn=Math.sin(phi);const rx=cx+dx*c-dy*sn,ry=cy+dx*sn+dy*c;const f=b*2600*r/(r2+3600);return[rx-x-dx/r*f,ry-y-dy/r*f]}},
+  step(dt,s){const cx=s.w/2,cy=s.h/2;for(let i=0;i<s.m.length;i++){const m=s.m[i];const dx=cx-m.x,dy=cy-m.y;const r=Math.hypot(dx,dy)+1e-6;const ux=dx/r,uy=dy/r;m.x+=(ux*s.b*110-uy*s.tw*150)*dt;m.y+=(uy*s.b*110+ux*s.tw*150)*dt;m.trail.push([m.x,m.y]);if(m.trail.length>40)m.trail.shift();
+      if(r<14||m.x<-20||m.y<-20||m.x>s.w+20||m.y>s.h+20)s.m[i]=s.spawn(s,false)}},
+  draw(s){const{ctx,w,h}=s;ctx.clearRect(0,0,w,h);drawGrid(ctx,w,h,s.field(s),{spacing:28});shade(ctx,w/2,h/2,120*s.b+20,.4*s.b);
+    for(const m of s.m){poly(ctx,m.trail,C.blue,1.5,.4);marble(ctx,m.x,m.y,5,C.blue)}sun(ctx,w/2,h/2,18);
+    const lbl=s.b>.4&&s.tw>.4?'dent and twist together':s.tw>.4?'twist: things swirl':s.b>.4?'dent: things fall in':'flat: things just sit';text(ctx,lbl,w/2,h*.1,{size:28,color:C.yellow})}
+});
+slide('bend',v=>{if(twist)twist.b=v},pct);slide('twist',v=>{if(twist)twist.tw=v},pct);
+
+/* ---------- CH7: the lopsided ruler ---------- */
+const ruler=makeSim('cv-ruler',{
+  init(s){s.A={x:s.w*.25,y:s.h*.58};s.B={x:s.w*.74,y:s.h*.46};s.lop=.5;s.drag=null},
+  onResize(s){s.A.x=clamp(s.A.x,30,s.w-30);s.A.y=clamp(s.A.y,90,s.h-90);s.B.x=clamp(s.B.x,30,s.w-30);s.B.y=clamp(s.B.y,90,s.h-90)},
+  down(p,s){s.drag=dist(p,s.A)<26?s.A:dist(p,s.B)<26?s.B:null},
+  move(p,s){if(s.drag){s.drag.x=clamp(p.x,30,s.w-30);s.drag.y=clamp(p.y,90,s.h-90)}},
+  up(p,s){s.drag=null},
+  arc(ctx,P,Q,side,color,n,lbl){const mx=(P.x+Q.x)/2,my=(P.y+Q.y)/2;const dx=Q.x-P.x,dy=Q.y-P.y;const L=Math.hypot(dx,dy)+1e-6;const nx=-dy/L*side,ny=dx/L*side;const off=70;const cx=mx+nx*off*2,cy=my+ny*off*2;const pts=[];for(let i=0;i<=40;i++){const t=i/40;pts.push([(1-t)*(1-t)*P.x+2*(1-t)*t*cx+t*t*Q.x,(1-t)*(1-t)*P.y+2*(1-t)*t*cy+t*t*Q.y])}
+    poly(ctx,pts,color,2,.9);const k=Math.max(1,Math.round(n));for(let i=1;i<k;i++){const t=i/k;const x=(1-t)*(1-t)*P.x+2*(1-t)*t*cx+t*t*Q.x,y=(1-t)*(1-t)*P.y+2*(1-t)*t*cy+t*t*Q.y;const ddx=2*(1-t)*(cx-P.x)+2*t*(Q.x-cx),ddy=2*(1-t)*(cy-P.y)+2*t*(Q.y-cy);const dl=Math.hypot(ddx,ddy)+1e-6;poly(ctx,[[x-ddy/dl*5,y+ddx/dl*5],[x+ddy/dl*5,y-ddx/dl*5]],color,2)}
+    const e=pts[38],f=pts[40];const ang=Math.atan2(f[1]-e[1],f[0]-e[0]);ctx.save();ctx.translate(f[0],f[1]);ctx.rotate(ang);ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-10,-7);ctx.lineTo(0,0);ctx.lineTo(-10,7);ctx.stroke();ctx.restore();
+    text(ctx,lbl,mx+nx*off*1.45,my+ny*off*1.45,{size:24,color})},
+  draw(s){const{ctx,w,h,A,B}=s;ctx.clearRect(0,0,w,h);drawGrid(ctx,w,h,()=>[0,0],{spacing:30,alpha:.1});
+    const L=dist(A,B);const d=L/24;const ex=s.lop*3*(B.x-A.x)/(L+1e-6);const nAB=Math.max(.5,d+ex),nBA=Math.max(.5,d-ex);
+    s.arc(ctx,A,B,-1,C.blue,nAB,`A to B: ${nAB.toFixed(1)} steps`);s.arc(ctx,B,A,-1,C.pink,nBA,`B to A: ${nBA.toFixed(1)} steps`);
+    for(const[P,n] of [[A,'A'],[B,'B']]){glow(ctx,P.x,P.y,40,C.yellow,.35);circle(ctx,P.x,P.y,18,C.yellow);text(ctx,n,P.x,P.y+1,{size:26,color:C.board})}
+    const diff=Math.abs(nAB-nBA);text(ctx,diff<.05?'same both ways: that part is gravity':`different by ${diff.toFixed(1)}: Einstein hoped that part is electricity`,w/2,h*.92,{size:22,color:diff<.05?C.chalk:C.yellow,alpha:.9})}
+});
+slide('lop',v=>{if(ruler)ruler.lop=v},pct);
+
+/* ---------- CH8: push the forces together ---------- */
+hook('unite',()=>{const f=$('forces');f.classList.toggle('united');$('unite').textContent=f.classList.contains('united')?'Pull them apart':'Push them together'});
+
+/* ---------- CH9: sandbox with both pulls ---------- */
+const KE=260000;
+const sand=makeSim('cv-sand',{
+  init(s){s.sun={x:s.w*.4,y:s.h*.5,m:1};s.marbles=[];s.poofs=[];s.press=null;s.drag=false;s.count=0;s.tool=0;s.charges=[{x:s.w*.78,y:s.h*.3,q:1},{x:s.w*.72,y:s.h*.78,q:-1}];s.dragC=null;s.dirty=true},
+  onResize(s){s.sun.x=clamp(s.sun.x,30,s.w-30);s.sun.y=clamp(s.sun.y,30,s.h-30);s.dirty=true},
+  sunR(s){return 14+9*s.sun.m},
+  add(s,q){let p,tries=0;do{p={x:s.w*.15+Math.random()*s.w*.7,y:s.h*.15+Math.random()*s.h*.7,q};tries++}while(tries<30&&(s.charges.some(c=>dist(c,p)<60)||dist(p,s.sun)<80));s.charges.push(p);if(s.charges.length>6)s.charges.shift();s.dirty=true},
+  down(p,s){s.dragC=s.charges.find(c=>dist(c,p)<22)||null;if(s.dragC)return;if(dist(p,s.sun)<s.sunR(s)+10)s.drag=true;else s.press={x:p.x,y:p.y}},
+  move(p,s){if(s.dragC){s.dragC.x=clamp(p.x,16,s.w-16);s.dragC.y=clamp(p.y,16,s.h-16);s.dirty=true}else if(s.drag){s.sun.x=clamp(p.x,30,s.w-30);s.sun.y=clamp(p.y,30,s.h-30)}},
+  up(p,s){if(s.dragC){s.dragC=null;return}if(s.drag){s.drag=false;return}if(!s.press)return;const d={x:p.x-s.press.x,y:p.y-s.press.y};let v;if(Math.hypot(d.x,d.y)<8)v=s.sun.m>0?orbitV(s.press,s.sun,GM0*s.sun.m,30):{vx:0,vy:0};else v={vx:d.x*2.2,vy:d.y*2.2};s.launch(s,s.press.x,s.press.y,v.vx,v.vy,s.tool);s.press=null},
+  launch:sheet.launch,
+  extra(s,m,h){if(!m.q)return;for(const c of s.charges){const dx=m.x-c.x,dy=m.y-c.y;const r2=dx*dx+dy*dy;const a=KE*m.q*c.q/Math.pow(r2+400,1.5);m.vx+=dx*a*h;m.vy+=dy*a*h;if(r2<196&&m.q*c.q<0){m.dead=true;s.poofs.push({x:m.x,y:m.y,t:0,c:m.c})}}},
+  step:sheet.step,
+  pre(s){if(s.dirty){s.fl=fieldLines(s.charges,s.w,s.h,{per:12,max:520});s.dirty=false}drawLines(s.ctx,s.fl,{alpha:.3,arrows:false})},
+  post(s){for(const c of s.charges)drawCharge(s.ctx,c,14);if(s.count===0&&!s.press)text(s.ctx,'pick a marble, then tap to launch it',s.w/2,s.h*.92,{size:22,alpha:.75})},
+  draw:sheet.draw
+});
+slide('sand-mass',v=>{if(sand)sand.sun.m=v},v=>v.toFixed(1));
+hook('sand-add-pos',()=>sand&&sand.add(sand,1));hook('sand-add-neg',()=>sand&&sand.add(sand,-1));
+hook('sand-clear',()=>{if(sand){sand.marbles=[];sand.charges=[];sand.dirty=true}});
+document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tool]').forEach(x=>x.classList.remove('is-on'));b.classList.add('is-on');if(sand)sand.tool=parseInt(b.dataset.tool,10)}));
+
+/* ---------- chapter trail ---------- */
+const links=[...document.querySelectorAll('.trail a')];
+const io=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){links.forEach(l=>l.classList.toggle('is-active',l.dataset.for===e.target.id))}}},{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('#top, .chapter').forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>
