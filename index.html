@@ -245,6 +245,17 @@ html:not([data-level]) .discuss ol.lv-k5,html[data-level="k5"] .discuss ol.lv-k5
 .qlist a{color:var(--chalk);text-decoration:none}
 .qlist a:hover{color:var(--yellow)}
 .qlist small{color:var(--chalk-dim);margin-left:.45rem}
+
+.links.std{font-size:.82rem}.links.std b{color:var(--chalk-dim);font-weight:900;letter-spacing:.08em;text-transform:uppercase;font-size:.68rem;margin-right:.3rem}
+.baselist{list-style:none;margin:1.2rem 0 0;padding:0;display:grid;gap:.4rem}
+.baselist li{display:grid;grid-template-columns:4.2rem 1fr;gap:.2rem .8rem;align-items:baseline;padding:.55rem .2rem;border-bottom:1px dashed var(--chalk-line)}
+.baselist .pill{font-size:.62rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:.2rem .5rem;text-align:center;color:var(--board);background:var(--chalk-dim)}
+.baselist li.built .pill{background:var(--green)}
+.baselist a,.baselist b{font-family:var(--display);font-size:1.45rem;font-weight:700;color:var(--chalk);text-decoration:none}
+.baselist a{color:var(--yellow)}
+.baselist .what{grid-column:2;color:var(--chalk-dim);font-size:.92rem}
+.baselist .ngss{grid-column:2;font-size:.78rem;color:var(--chalk-dim);letter-spacing:.04em}
+@media (min-width:700px){.baselist li{grid-template-columns:4.2rem 14rem 1fr 14rem}.baselist .what,.baselist .ngss{grid-column:auto}}
 </style>
 </head>
 <body>
@@ -315,6 +326,7 @@ html:not([data-level]) .discuss ol.lv-k5,html[data-level="k5"] .discuss ol.lv-k5
       <p class="exit"><b>Exit ticket</b> One sentence: how are gravity and magnetism alike, and how are they different?</p>
       <p class="links">Before this: <a href="https://thedimension5.github.io/chalkboard/electricity/#ch2">Electricity From Zero 2, Push, flow, opposition</a></p>
       <p class="links"><span class="unitbadge">Fields and forces · step 2</span></p>
+      
     </div>
   </figure>
 </section>
@@ -353,8 +365,9 @@ html:not([data-level]) .discuss ol.lv-k5,html[data-level="k5"] .discuss ol.lv-k5
       <p class="skill"><b>You can now:</b> explain gravity as the shape of space and time rather than a pull.</p>
       <details class="discuss"><summary>Discuss</summary><ol class="lv lv-k5"><li>Why does a marble curve toward the heavy ball on a stretchy sheet?</li><li>What happens to the marbles when you make the Sun heavier?</li><li>The clock near the Sun falls behind. What do you think that would be like for a person standing there?</li></ol><ol class="lv lv-g8"><li>In Einstein's picture, is a planet being pulled, or is it coasting? Explain.</li><li>Name two predictions of general relativity that Newton's gravity could not make.</li><li>Why is the rubber sheet only a cartoon? What does it leave out?</li></ol><ol class="lv lv-hs"><li>State the equivalence principle in your own words and explain why it suggests gravity is not a force.</li><li>A marble in a stretched-out orbit speeds up and slows down. Where is it fastest, and why?</li><li>Explain why the near clock runs slow, and how the bending wavefronts are related to falling.</li></ol><ol class="lv lv-col"><li>Count the physical degrees of freedom of the metric and explain what removes the others.</li><li>Why does the Newtonian limit live in g₀₀, and what does that say about the rubber-sheet picture?</li><li>With Einstein's correction on, orbits precess. Explain the origin of the 1/r³ term and connect it to Mercury's 43 arcseconds per century.</li></ol><ol class="lv lv-max"><li>Count the physical degrees of freedom of the metric and explain what removes the others.</li><li>Why does the Newtonian limit live in g₀₀, and what does that say about the rubber-sheet picture?</li><li>With Einstein's correction on, orbits precess. Explain the origin of the 1/r³ term and connect it to Mercury's 43 arcseconds per century.</li></ol></details>
       <p class="exit"><b>Exit ticket</b> Draw the rubber sheet and label where a planet would go fastest.</p>
+      <p class="links">Before this: <a href="https://thedimension5.github.io/chalkboard/launch/#ch2">Launch Lab 2, Everything falls the same</a>, <a href="https://thedimension5.github.io/chalkboard/launch/#ch5">Launch Lab 5, Round and round</a></p>
+      <p class="links"><span class="unitbadge">Energy: rate and amount · step 5</span><span class="unitbadge">Fields and forces · step 4</span></p>
       
-      <p class="links"><span class="unitbadge">Energy: rate and amount · step 5</span><span class="unitbadge">Fields and forces · step 3</span></p>
     </div>
   </figure></div>
 </section>
@@ -387,7 +400,8 @@ html:not([data-level]) .discuss ol.lv-k5,html[data-level="k5"] .discuss ol.lv-k5
       <details class="discuss"><summary>Discuss</summary><ol class="lv lv-k5"><li>What does the compass tell you about the invisible hair?</li><li>Where is the hair thickest? Where is it thinnest?</li><li>Does the field make a dent in the grid the way the Sun did? What is different?</li></ol><ol class="lv lv-g8"><li>What is a field? Give an example of one you cannot see but can feel.</li><li>Why do field lines start on + charges and end on − charges?</li><li>Why did the 'pattern on top of space' idea bother Einstein?</li></ol><ol class="lv lv-hs"><li>Explain why equipotential lines are always perpendicular to field lines.</li><li>Where is the field zero between two like charges? Why?</li><li>How does special relativity show that E and B are one object?</li></ol><ol class="lv lv-col"><li>Write F<sub>μν</sub> in terms of A<sub>μ</sub> and count its independent components.</li><li>In what sense is electromagnetism 'already geometry' (a connection on a U(1) bundle)? On what bundle does gravitational curvature live?</li><li>The energy density of the field sources gravity. Sketch how the Reissner–Nordström solution differs from Schwarzschild.</li></ol><ol class="lv lv-max"><li>Write F<sub>μν</sub> in terms of A<sub>μ</sub> and count its independent components.</li><li>In what sense is electromagnetism 'already geometry' (a connection on a U(1) bundle)? On what bundle does gravitational curvature live?</li><li>The energy density of the field sources gravity. Sketch how the Reissner–Nordström solution differs from Schwarzschild.</li></ol></details>
       <p class="exit"><b>Exit ticket</b> One sentence: what is different about how gravity and a magnetic field sit on the sheet?</p>
       <p class="links">After this: <a href="https://thedimension5.github.io/chalkboard/electricity/#ch9">Electricity From Zero 9, What actually moves</a></p>
-      <p class="links"><span class="unitbadge">Fields and forces · step 4</span></p>
+      <p class="links"><span class="unitbadge">Fields and forces · step 5</span></p>
+      
     </div>
   </figure>
 </section>
@@ -417,7 +431,8 @@ html:not([data-level]) .discuss ol.lv-k5,html[data-level="k5"] .discuss ol.lv-k5
       <details class="discuss"><summary>Discuss</summary><ol class="lv lv-k5"><li>What is the difference between a shape of the sheet and a pattern on the sheet?</li><li>What did Einstein wish were true?</li><li>If his wish came true, how many rulebooks would there be?</li></ol><ol class="lv lv-g8"><li>Gravity needs 10 numbers at each point and electricity needs 6. Why does that make the puzzle sound easy?</li><li>What are the three 'hiding places' Einstein tried?</li><li>What else did Einstein hope a unified theory would explain?</li></ol><ol class="lv lv-hs"><li>Why does a symmetric 4×4 matrix have 10 independent entries, and an antisymmetric one 6?</li><li>What does 'all marble' mean in Einstein's metaphor?</li><li>Why is counting components not enough to make a theory work?</li></ol><ol class="lv lv-col"><li>State Einstein's criteria for a unified field theory as precisely as you can.</li><li>The Lorentz-force condition is usually the one that failed. Why must a unified theory derive equations of motion rather than assume them?</li><li>What do the Coleman–Mandula and Weinberg–Witten theorems each rule out, and why did neither apply to Einstein's classical program?</li></ol><ol class="lv lv-max"><li>State Einstein's criteria for a unified field theory as precisely as you can.</li><li>The Lorentz-force condition is usually the one that failed. Why must a unified theory derive equations of motion rather than assume them?</li><li>What do the Coleman–Mandula and Weinberg–Witten theorems each rule out, and why did neither apply to Einstein's classical program?</li></ol></details>
       <p class="exit"><b>Exit ticket</b> Finish the sentence: Einstein wished that electricity was secretly a kind of ___.</p>
       <p class="links">Before this: <a href="https://thedimension5.github.io/chalkboard/electricity/#ch9">Electricity From Zero 9, What actually moves</a></p>
-      <p class="links"><span class="unitbadge">Fields and forces · step 6</span></p>
+      <p class="links"><span class="unitbadge">Fields and forces · step 7</span></p>
+      
     </div>
   </figure>
 </section>
@@ -447,6 +462,7 @@ html:not([data-level]) .discuss ol.lv-k5,html[data-level="k5"] .discuss ol.lv-k5
       <p class="skill"><b>You can now:</b> explain how a hidden rolled-up direction could carry electric charge.</p>
       <details class="discuss"><summary>Discuss</summary><ol class="lv lv-k5"><li>Why does the hose look like a line from far away?</li><li>What can the ant do that a giant cannot?</li><li>If the loop is at every point in space, why can't we see it?</li></ol><ol class="lv lv-g8"><li>What does it mean that charge is 'momentum around the circle'?</li><li>Why would a tiny circle make charge come in whole-number lumps?</li><li>What was the big problem with the predicted mass of charged particles?</li></ol><ol class="lv lv-hs"><li>Show how 15 splits into 10 + 4 + 1 and say what each piece is.</li><li>Why does p₅ = nħ/R follow from a wavefunction on a circle?</li><li>What is the 'cylinder condition,' and why is it an assumption rather than a result?</li></ol><ol class="lv lv-col"><li>Explain how a U(1) gauge transformation becomes a coordinate change in the fifth dimension.</li><li>Why can the dilaton not be truncated consistently?</li><li>What is the chirality obstruction in Kaluza–Klein theories, and how does string theory evade it?</li></ol><ol class="lv lv-max"><li>Explain how a U(1) gauge transformation becomes a coordinate change in the fifth dimension.</li><li>Why can the dilaton not be truncated consistently?</li><li>What is the chirality obstruction in Kaluza–Klein theories, and how does string theory evade it?</li></ol></details>
       <p class="exit"><b>Exit ticket</b> Explain the hose and the ant to someone who has not seen it.</p>
+      
       
       
     </div>
@@ -480,6 +496,7 @@ html:not([data-level]) .discuss ol.lv-k5,html[data-level="k5"] .discuss ol.lv-k5
       <p class="exit"><b>Exit ticket</b> One sentence: why did Einstein give up the twist idea?</p>
       
       
+      
     </div>
   </figure>
 </section>
@@ -508,6 +525,7 @@ html:not([data-level]) .discuss ol.lv-k5,html[data-level="k5"] .discuss ol.lv-k5
       <p class="skill"><b>You can now:</b> explain 16 = 10 + 6 and what each part was supposed to be.</p>
       <details class="discuss"><summary>Discuss</summary><ol class="lv lv-k5"><li>How can a ruler count differently in two directions?</li><li>Which part of the count did Einstein call gravity?</li><li>Why do you think Einstein kept working on this until the end of his life?</li></ol><ol class="lv lv-g8"><li>Why does dropping the symmetry turn 10 numbers into 16?</li><li>What test, worked out in 1953, showed the theory was wrong?</li><li>Which parts of this story were teamwork, and who helped?</li></ol><ol class="lv lv-hs"><li>Write g<sub>μν</sub> = s<sub>μν</sub> + a<sub>μν</sub> and explain what each part was supposed to be.</li><li>Why is 'a different distance each way' only a picture and not the literal math?</li><li>Why did charges in this theory not push or pull each other?</li></ol><ol class="lv lv-col"><li>Why does the antisymmetric part lack a gauge invariance, and why does that rule out a massless photon?</li><li>Summarize Callaway's 1953 result and the method behind it.</li><li>Where does a non-symmetric metric-like object appear in string theory, and is it electromagnetism?</li></ol><ol class="lv lv-max"><li>Why does the antisymmetric part lack a gauge invariance, and why does that rule out a massless photon?</li><li>Summarize Callaway's 1953 result and the method behind it.</li><li>Where does a non-symmetric metric-like object appear in string theory, and is it electromagnetism?</li></ol></details>
       <p class="exit"><b>Exit ticket</b> Write the counting: symmetric part, lopsided part, total.</p>
+      
       
       
     </div>
@@ -578,6 +596,7 @@ html:not([data-level]) .discuss ol.lv-k5,html[data-level="k5"] .discuss ol.lv-k5
       <p class="exit"><b>Exit ticket</b> List the four forces and star the one Einstein never knew about while he worked.</p>
       
       <p class="links"><span class="unitbadge">How we know · step 5</span></p>
+      
     </div>
   </div>
 </section>
@@ -624,6 +643,7 @@ html:not([data-level]) .discuss ol.lv-k5,html[data-level="k5"] .discuss ol.lv-k5
       <p class="exit"><b>Exit ticket</b> Which of the four checklist items is hardest, and why?</p>
       <p class="links">After this: <a href="https://thedimension5.github.io/chalkboard/infinity/#ch5">Bigger than Infinity 5, The ladder</a></p>
       
+      
     </div>
   </figure>
 </section>
@@ -652,6 +672,7 @@ html:not([data-level]) .discuss ol.lv-k5,html[data-level="k5"] .discuss ol.lv-k5
       <p class="skill"><b>You can now:</b> test a force law and say whether it makes stable orbits.</p>
       <details class="discuss"><summary>Discuss</summary><ol class="lv lv-k5"><li>What happened to the marbles when you made the pull fade faster?</li><li>Which rule made the marbles keep circling?</li><li>If you could invent one rule for the universe, what would it be?</li></ol><ol class="lv lv-g8"><li>Why does our universe's rule ('twice as far, a quarter the pull') make good planets?</li><li>What went wrong with the cube rule?</li><li>What is Bertrand's theorem, in your own words?</li></ol><ol class="lv lv-hs"><li>Explain why n < 3 is required for stable circular orbits.</li><li>How does Gauss's law connect the inverse-square law to three-dimensional space?</li><li>What does the spring rule (n = −1) have in common with n = 2?</li></ol><ol class="lv lv-col"><li>State Bertrand's theorem and the hidden symmetries behind its two cases.</li><li>Reconstruct Ehrenfest's argument that d > 3 is unstable for atoms and orbits.</li><li>How do tabletop inverse-square tests constrain large extra dimensions?</li></ol><ol class="lv lv-max"><li>State Bertrand's theorem and the hidden symmetries behind its two cases.</li><li>Reconstruct Ehrenfest's argument that d > 3 is unstable for atoms and orbits.</li><li>How do tabletop inverse-square tests constrain large extra dimensions?</li></ol></details>
       <p class="exit"><b>Exit ticket</b> Which rules gave orbits that repeat exactly? Name both.</p>
+      <p class="links">Before this: <a href="https://thedimension5.github.io/chalkboard/launch/#ch3">Launch Lab 3, The launch</a></p>
       
       
     </div>
@@ -715,6 +736,7 @@ function makeSim(id,def){const cv=$(id);if(!cv)return null;const ctx=cv.getConte
 let last=performance.now();
 function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;for(const s of sims){if(!s.visible||!s.w)continue;s.dt=dt;s.t+=dt;s.step&&s.step(dt,s);s.draw(s)}requestAnimationFrame(loop)}
 requestAnimationFrame(loop);
+function tick(dt){for(const s of sims){if(!s.w)continue;s.dt=dt;s.t+=dt;s.step&&s.step(dt,s);s.draw(s)}}
 const hook=(id,fn)=>{const el=$(id);if(el)el.addEventListener('click',fn)};
 const slide=(id,fn,f)=>{const el=$(id),out=$(id+'-val');if(!el)return;const go=()=>{const v=parseFloat(el.value);if(out)out.textContent=f?f(v):v;fn(v)};el.addEventListener('input',go);go()};
 
@@ -765,7 +787,7 @@ function start(o){KEY=o.key||'chalk';DEFS=o.missions||[];CHECKS=o.checks||{};UNI
   let lv0=null;try{lv0=new URL(location.href).searchParams.get('level')}catch(e){}if(!lv0){try{lv0=localStorage.getItem('one-rule-level')}catch(e){}}
   setLevel(lv0||'k5',false);setInterval(checkMissions,300);
   const links=[...document.querySelectorAll('.trail a')];if(links.length){const io=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting)links.forEach(l=>l.classList.toggle('is-active',l.dataset.for===e.target.id))}},{rootMargin:'-45% 0px -50% 0px'});document.querySelectorAll('#top, .chapter').forEach(el=>io.observe(el))}}
-return{C,REDUCE,rgba,clamp,dist,$,fmt,sup,pct,text,circle,glow,shade,poly,rr,box,marble,readout,arrow,rng,at,level:()=>LEVEL,makeSim,hook,slide,start,checkPassed};
+return{C,REDUCE,rgba,clamp,dist,$,fmt,sup,pct,text,circle,glow,shade,poly,rr,box,marble,readout,arrow,rng,at,level:()=>LEVEL,makeSim,hook,slide,start,checkPassed,tick,checkNow:()=>checkMissions()};
 })();
 </script>
 <script>
